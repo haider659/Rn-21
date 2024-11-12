@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "575265971208",
+    "project_id": "reactnative-b2112",
+    "storage_bucket": "reactnative-b2112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575265971208:android:798fd4893b6f12bb7185bd",
+        "android_client_info": {
+          "package_name": "com.stacknavigation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmfaxch-7hoBYoA2y17Bks0PMQNBwHQsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

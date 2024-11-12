@@ -1,29 +1,36 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Home from '../screens/Home';
-import About from '../screens/About';
-import Contact from '../screens/Contact';
+import { createStackNavigator } from '@react-navigation/stack';
+import Dashboard from '../screens/Dashboard';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
-import Dashboard from '../screens/Dashboard';
+import BurgerMenu from '../screens/BurgerMenu';
+import DessertMenu from '../screens/DessertMenu';
+import MexicanMenu from '../screens/MexicanMenu';
+import SushiMenu from '../screens/SushiMenu';
+import OrderDetail from '../screens/About';
+import TabNavigation from './TabNavigation';
+import Account from '../screens/Account';
+import FindLocation from '../screens/Location';
 
+const Stack = createStackNavigator();
 
-const StackNavigation = () => {
-    const Stack = createStackNavigator();  // Capitalize 'Stack' for better clarity
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="login" component={Login} />
-        <Stack.Screen name="signup" component={Signup} />
-        <Stack.Screen name="dashboard" component={Dashboard} />  
-        
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+const StackNavigation = () => (
+  <NavigationContainer>
+    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Dashboard" component={TabNavigation} />
+      <Stack.Screen name="BurgerMenu" component={BurgerMenu} />
+      <Stack.Screen name="DessertMenu" component={DessertMenu} />
+      <Stack.Screen name="MexicanMenu" component={MexicanMenu} />
+      <Stack.Screen name="SushiMenu" component={SushiMenu} />
+      <Stack.Screen name="orderdetail" component={OrderDetail} />
+      <Stack.Screen name="location" component={FindLocation} />
+      <Stack.Screen name="Account" component={Account} />
+
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 
 export default StackNavigation;
-
-const styles = StyleSheet.create({}); // Empty styles object is fine unless you need specific styling

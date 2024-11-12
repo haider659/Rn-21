@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // For storing data in local storage
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Signup = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -11,8 +11,15 @@ const Signup = ({ navigation }) => {
   const handleSignup = async () => {
     if (name && email && password) {
       const userData = { name, email, password };
-      await AsyncStorage.setItem('user', JSON.stringify(userData));
-      navigation.navigate('login'); 
+      try {
+        await AsyncStorage.setItem('user', JSON.stringify(userData));
+        setName('');
+        setEmail('');
+        setPassword('');
+        navigation.navigate('Login');
+      } catch (error) {
+        alert('Failed to save user data. Please try again.');
+      }
     } else {
       alert('Please fill all the fields');
     }
@@ -20,20 +27,46 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        {/* <Icon name="arrow" size={24} color="black" /> */}
-      </TouchableOpacity>
-      {/* <Icon name="arrow-bold-right" size={100} color="#9b59b6" style={styles.icon} /> */}
-      <Text style={styles.title}>Create Account</Text>
-      <TextInput placeholder="Name" style={styles.input} value={name} onChangeText={setName} />
-      <TextInput placeholder="Email" style={styles.input} value={email} onChangeText={setEmail} keyboardType="email-address" />
-      <TextInput placeholder="Password" style={styles.input} value={password} onChangeText={setPassword} secureTextEntry />
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-        <Text style={styles.signupText}>SIGN UP</Text>
-      </TouchableOpacity>
+      <Text style={styles.logoText}>FOODIE</Text>
+      <Text style={styles.subtitle}>Deliver Favourite Food</Text>
+      <View style={styles.card}>
+        <Text style={styles.title}>Signup</Text>
+        <View style={styles.inputContainer}>
+          <Icon name="person" size={20} color="#aaa" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Name"
+            style={styles.input}
+            value={name}
+            onChangeText={setName}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Icon name="email" size={20} color="#aaa" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Email"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Icon name="lock" size={20} color="#aaa" style={styles.inputIcon} />
+          <TextInput
+            placeholder="Password"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+        </View>
+        <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+          <Text style={styles.signupText}>Create Account</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.loginText}>
         Already have an account?{' '}
-        <Text onPress={() => navigation.navigate('login')} style={styles.loginLink}>
+        <Text onPress={() => navigation.navigate('Login')} style={styles.loginLink}>
           Login
         </Text>
       </Text>
@@ -42,15 +75,76 @@ const Signup = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', paddingHorizontal: 20 },
-  backButton: { position: 'absolute', top: 40, left: 20 },
-  icon: { marginBottom: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#9b59b6', marginBottom: 30 },
-  input: { width: '100%', height: 50, borderColor: '#ccc', borderWidth: 1, borderRadius: 5, paddingHorizontal: 15, marginBottom: 20, fontSize: 16 },
-  signupButton: { backgroundColor: '#9b59b6', width: '100%', paddingVertical: 15, borderRadius: 5, alignItems: 'center', marginBottom: 20 },
-  signupText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-  loginText: { fontSize: 14, color: '#333' },
-  loginLink: { color: '#9b59b6', fontWeight: 'bold' },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1f023e',
+    paddingHorizontal: 20,
+  },
+  logoText: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 5,
+  },
+  subtitle: {
+    color: '#d3d3d3',
+    fontSize: 16,
+    marginBottom: 30,
+  },
+  card: {
+    width: '90%',
+    backgroundColor: '#2b0a4e',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#3e2269',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+  },
+  inputIcon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    height: 50,
+    color: '#fff',
+  },
+  signupButton: {
+    backgroundColor: '#1e1468',
+    width: '100%',
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  signupText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  loginText: {
+    fontSize: 14,
+    color: '#fff',
+    marginTop: 20,
+  },
+  loginLink: {
+    color: '#4d86e8',
+    fontWeight: 'bold',
+  },
 });
 
 export default Signup;
